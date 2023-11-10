@@ -1,5 +1,5 @@
 import { client, selectSp } from '@/client';
-import { getOffchainAuthKeys } from '@/utils/offchainAuth';
+import { getOffchainAuthKeys, getOffchainAuthKeysTest } from '@/utils/offchainAuth';
 import { ChangeEvent, useState } from 'react';
 import { useAccount } from 'wagmi';
 
@@ -81,6 +81,8 @@ export const Demo = () => {
             }
 
             try {
+              console.log('offChainData', offChainData);
+
               const createBucketTx = await client.bucket.createBucket(
                 {
                   bucketName: createBucketInfo.bucketName,
@@ -307,12 +309,13 @@ export const Demo = () => {
               alert('Please select a file or address');
               return;
             }
-
+            if (!address) return;
             const spInfo = await selectSp();
             console.log('spInfo', spInfo);
 
             const provider = await connector?.getProvider();
-            const offChainData = await getOffchainAuthKeys(address, provider);
+            const offChainData = await getOffchainAuthKeysTest(address, provider);
+            console.log("offchain_data:" + JSON.stringify(offChainData));
             if (!offChainData) {
               alert('No offchain, please create offchain pairs first');
               return;
@@ -334,7 +337,7 @@ export const Demo = () => {
                   bucketName: createObjectInfo.bucketName,
                   objectName: createObjectInfo.objectName,
                   creator: address,
-                  visibility: 'VISIBILITY_TYPE_PRIVATE',
+                  visibility: 'VISIBILITY_TYPE_PUBLIC_READ',
                   fileType: file.type,
                   redundancyType: 'REDUNDANCY_EC_TYPE',
                   contentLength,
@@ -355,6 +358,18 @@ export const Demo = () => {
               });
   
               console.log('simulateInfo', simulateInfo);
+
+              const res = await createObjectTx.broadcast({
+                denom: 'BNB',
+                gasLimit: Number(simulateInfo?.gasLimit),
+                gasPrice: simulateInfo?.gasPrice || '5000000000',
+                payer: address,
+                granter: '',
+              });
+
+              if (res.code === 0) {
+                alert('success');
+              }
             } catch (err) {
               console.log(typeof err)
               if (err instanceof Error) {
