@@ -4,7 +4,7 @@ Tagger and Uploader.
 
 Tagger information:
 
-> Smart Contract(BNB Testnet): https://testnet.bscscan.com/address/0x545EDf91e91b96cFA314485F5d2A1757Be11d384#code
+> Tagger Smart Contract(BNB Mainnet) for all-whitepapers: https://bscscan.com/address/0x4fF091dF04001bB455C5D01aF354B23e5C7F0629#code
 > 
 > dApp: https://greenfield-eight.vercel.app/
 
