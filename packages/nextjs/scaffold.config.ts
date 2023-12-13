@@ -9,30 +9,30 @@ export type ScaffoldConfig = {
   walletAutoConnect: boolean;
 };
 
-const bnbTestnet: chains.Chain = {
-  id: 97,
-  name: "bnbTestnet",
-  network: "bnbTestnet",
+const bnb: chains.Chain = {
+  id: 56,
+  name: "bnb",
+  network: "bnb",
   nativeCurrency: {
-    name: "tBNB",
-    symbol: "tBNB",
+    name: "BNB",
+    symbol: "BNB",
     decimals: 18,
   },
   rpcUrls: {
     default:
     {
-      http: ["https://data-seed-prebsc-1-s1.binance.org:8545"]
+      http: ["https://bsc-dataseed.binance.org"]
     },
     public: 
     {
-      http: ["https://data-seed-prebsc-1-s1.binance.org:8545"]
+      http: ["https://bsc-dataseed.binance.org"]
     },
   }
 }
 
 const scaffoldConfig = {
   // The network where your DApp lives in
-  targetNetwork: bnbTestnet,
+  targetNetwork: bnb,
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
